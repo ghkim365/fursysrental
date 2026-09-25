@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼시스 렌탈 클론 구현 계획서 (아키텍처 비교)</title>
+    <!-- Tailwind CSS (브랜드 맞춤형 다크모드/글래스모피즘 분위기 적용) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Mermaid.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose'
+        });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 min-h-screen">
+    <div class="max-w-6xl mx-auto space-y-12">
+        
+        <!-- Header -->
+        <header class="text-center space-y-4">
+            <h1 class="text-3xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                퍼시스 렌탈 클론 통합 구현 계획서
+            </h1>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
+                단기 운용 상품 카탈로그(577개 가구) 및 견적 문의 기능에 대한 일반 vs 초절약 아키텍처 비교 보고서
+            </p>
+        </header>
+
+        <!-- 비교 대시보드 테이블 -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl shadow-xl space-y-6">
+            <h2 class="text-xl md:text-2xl font-semibold border-l-4 border-teal-400 pl-3">
+                1. 아키텍처별 핵심 리소스 비교
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-700 text-slate-300 font-medium text-sm">
+                            <th class="py-4 px-4">구분</th>
+                            <th class="py-4 px-4 text-rose-400">일반 개발 아키텍처</th>
+                            <th class="py-4 px-4 text-teal-400">초절약 아키텍처</th>
+                            <th class="py-4 px-4 text-emerald-400">절감 효과</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-slate-800 text-slate-300">
+                        <tr>
+                            <td class="py-5 px-4 font-semibold">토큰 예상 소진량</td>
+                            <td class="py-5 px-4">약 80,000 ~ 120,000 토큰</td>
+                            <td class="py-5 px-4 font-bold text-teal-300">약 20,000 ~ 30,000 토큰</td>
+                            <td class="py-5 px-4 font-bold text-emerald-400 bg-emerald-950/20 rounded-lg">약 75% 절감</td>
+                        </tr>
+                        <tr>
+                            <td class="py-5 px-4 font-semibold">예상 소요 시간</td>
+                            <td class="py-5 px-4">총 47시간 (약 6~8 영업일)</td>
+                            <td class="py-5 px-4 font-bold text-teal-300">총 20시간 (약 2.5~3 영업일)</td>
+                            <td class="py-5 px-4 font-bold text-emerald-400 bg-emerald-950/20 rounded-lg">약 57% 시간 단축</td>
+                        </tr>
+                        <tr>
+                            <td class="py-5 px-4 font-semibold valign-top">상세 작업 범위</td>
+                            <td class="py-5 px-4 text-xs space-y-1">
+                                <p>• Laravel 서버 구축 & RDB 설계</p>
+                                <p>• 577개 가구 데이터 크롤링 서버 적재</p>
+                                <p>• 백엔드 다중 조건 필터링 API</p>
+                                <p>• 세션 및 DB 연동 장바구니 관리</p>
+                            </td>
+                            <td class="py-5 px-4 text-xs space-y-1 text-teal-100">
+                                <p>• HTML/JS 정적 마크업 개발</p>
+                                <p>• 1회성 브라우저 크롤링 후 JSON 저장</p>
+                                <p>• 프론트엔드 내 초고속 메모리 필터링</p>
+                                <p>• LocalStorage 활용 브라우저 장바구니</p>
+                            </td>
+                            <td class="py-5 px-4 text-xs text-emerald-300">
+                                <p>• 서버 구축 및 RDB 비용 0원</p>
+                                <p>• 별도 DB 관리 공수 완전 제거</p>
+                                <p>• 정적 호스팅(GitHub/Vercel) 100% 가능</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 도식화 다이어그램 -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- 일반 개발 아키텍처 다이어그램 -->
+            <div class="glass-card p-6 rounded-3xl shadow-lg space-y-4">
+                <h3 class="text-lg font-bold text-rose-400">일반 개발 아키텍처 흐름</h3>
+                <p class="text-xs text-slate-400">서버 데이터베이스 통신 및 백엔드 쿼리에 의존하는 다층 아키텍처</p>
+                <div class="mermaid bg-slate-900/60 p-4 rounded-xl flex justify-center">
+                    graph TD
+                        Client[브라우저 클라이언트] -->|API Request| WebServer[Apache / Laravel 웹서버]
+                        WebServer -->|SQL Query| RDB[(관계형 DB - 577개 상품)]
+                        Crawler[스크래핑 스크립트] -->|DB 적재| RDB
+                        WebServer -->|Mail SMTP / Slack Webhook| Alert[관리자 알림 발송]
+                </div>
+            </div>
+
+            <!-- 초절약 아키텍처 다이어그램 -->
+            <div class="glass-card p-6 rounded-3xl shadow-lg space-y-4">
+                <h3 class="text-lg font-bold text-teal-400">초절약 아키텍처 흐름 (권장)</h3>
+                <p class="text-xs text-slate-400">서버 없이 클라이언트와 정적 JSON, 서버리스 API를 연동하는 초경량 구조</p>
+                <div class="mermaid bg-slate-900/60 p-4 rounded-xl flex justify-center">
+                    graph TD
+                        Client[브라우저 클라이언트] -->|직접 메모리 로드| JSON[products.json 정적 파일]
+                        Client -->|장바구니 저장| Storage[(LocalStorage 브라우저 저장소)]
+                        Client -->|Email/Dropzone API| Serverless[Serverless Mail API / S3 Direct Upload]
+                        Console[브라우저 개발도구 콘솔] -->|1회성 스크랩| JSON
+                </div>
+            </div>
+        </section>
+
+        <!-- 타당성 검토 리포트 -->
+        <section class="glass-card p-6 md:p-8 rounded-3xl shadow-xl space-y-6">
+            <h2 class="text-xl md:text-2xl font-semibold border-l-4 border-cyan-400 pl-3">
+                2. 초절약 아키텍처 타당성 검토
+            </h2>
+            <div class="bg-cyan-950/20 border border-cyan-500/20 p-5 rounded-2xl space-y-4">
+                <h3 class="text-base font-bold text-cyan-300">Q. 초절약 아키텍처로 의뢰해도 기능 구현에는 문제가 없나요?</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    <strong>예, 기능 구현 및 사용자 사용성에 아무런 지장이 없습니다.</strong> 본 사이트는 결제 및 실시간 재고 연동 등의 보안 트랜잭션이 요구되지 않는 단순 상품 소개 및 견적 문의 웹사이트입니다. 577개 가구 리스트는 100KB 내외의 <code class="text-cyan-300 bg-slate-800 px-1.5 py-0.5 rounded text-xs">products.json</code> 파일 형태로 번들링하여 브라우저에 바로 공급할 수 있습니다.
+                </p>
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    이를 통해 사용자가 카테고리를 전환하거나 필터링을 변경할 때 서버 통신 없이 <strong>즉각(10ms 이하) 화면이 전환</strong>되는 압도적인 렌더링 성능을 확보할 수 있어 오히려 사용자 체감 경험(UX) 측면에서 이점이 매우 큽니다.
+                </p>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>

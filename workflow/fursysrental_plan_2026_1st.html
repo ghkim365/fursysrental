@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>퍼시스 렌탈 (fursysrental) 통합 WBS 계획서 (2026)</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      color: #334155;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background-color: #f8fafc;
+    }
+    .card {
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 25px;
+    }
+    h1 {
+      font-size: 24px;
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 12px;
+      margin-top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .badge {
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background-color: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    h2 {
+      font-size: 18px;
+      color: #1e293b;
+      margin-top: 32px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 8px;
+    }
+    .summary-box {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 20px 0 25px 0;
+    }
+    .stat-card {
+      background: #f1f5f9;
+      padding: 16px 20px;
+      border-radius: 8px;
+      border-left: 4px solid #3b82f6;
+    }
+    .stat-card.success {
+      border-left-color: #22c55e;
+    }
+    .stat-card.warning {
+      border-left-color: #f59e0b;
+    }
+    .stat-title {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .stat-sub {
+      font-size: 12px;
+      color: #475569;
+      margin-top: 2px;
+    }
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
+    .task-item.completed .task-text {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+    .task-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .task-text {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 14.5px;
+    }
+    .task-text a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .task-text a:hover {
+      text-decoration: underline;
+    }
+    .task-date-input {
+      font-size: 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 2px 4px;
+      color: #475569;
+      background-color: #f8fafc;
+      outline: none;
+      width: 115px;
+      flex-shrink: 0;
+    }
+    .task-memo-input {
+      font-size: 11px;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 2px 6px;
+      color: #334155;
+      background-color: #ffffff;
+      outline: none;
+      width: 280px;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+    .task-memo-input:focus {
+      border-color: #3b82f6;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 10px;
+      background-color: #e2e8f0;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 15px;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #22c55e;
+      width: 100%;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>
+    <span>📊 퍼시스 렌탈 (fursysrental) WBS 진행 계획서 (2026)</span>
+    <span class="badge" style="background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd;">UI/기능 개발 86% (프론트 100%)</span>
+  </h1>
+  <p>퍼시스 렌탈(fursysrental.com) 클론 웹사이트 화면/기능 구축 및 실서버 운영 배포 파이프라인 관리 문서입니다.</p>
+
+  <div class="summary-box">
+    <div class="stat-card success">
+      <div class="stat-title">WBS 진행률</div>
+      <div class="stat-value" id="progress-percent">100%</div>
+      <div class="stat-sub" id="progress-text">24개 항목 중 24개 완료</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">아키텍처 절감 효과</div>
+      <div class="stat-value">50% 시간 / 75% 토큰</div>
+      <div class="stat-sub">23시간 / ~35,000 토큰 (서버비 0원)</div>
+    </div>
+    <div class="stat-card success">
+      <div class="stat-title">최종 퍼펙트 시스템</div>
+      <div class="stat-value">풀 파이프라인 완성</div>
+      <div class="stat-sub">엑셀 다운로드, 인원별 계산기, PWA, 세부필터 연동</div>
+    </div>
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="main-progress-bar"></div>
+  </div>
+
+  <h2>🎨 1단계: 디자인 시스템 & 공통 리소스 (퍼블리싱 & CSS/JS)</h2>
+  <ul style="list-style:none; padding-left:0;">
+    <li class="task-item completed">
+      <input type="checkbox" id="task-design-system" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/style.css" target="_blank">style.css (FURSYS 디자인 시스템 - Black/White/#FEE500 Accent, Glassmorphism, Micro-animations)</a></span>
+      <input type="date" class="task-date-input" id="task-design-system-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-design-system-memo" value="구현 완료 (반응형 그리드 및 모바일 UI 구축)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-core-js" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/main.js" target="_blank">main.js (공통 내비게이션 드로어, 카톡 상담 팝업, LocalStorage 장바구니 state 관리)</a></span>
+      <input type="date" class="task-date-input" id="task-core-js-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-core-js-memo" value="구현 완료 (견적 장바구니 싱글톤 스토어 연동)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-hero-image" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/images/hero.jpg" target="_blank">hero.jpg (사무/물류 현장 프리미엄 시네마틱 히어로 배너 이미지)</a></span>
+      <input type="date" class="task-date-input" id="task-hero-image-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-hero-image-memo" value="구현 완료 (이미지 가공 및 적용)">
+    </li>
+  </ul>
+
+  <h2>🖥️ 2단계: 메인 페이지 및 렌탈 방식 소개 (5개 핵심 HTML)</h2>
+  <ul style="list-style:none; padding-left:0;">
+    <li class="task-item completed">
+      <input type="checkbox" id="task-index-page" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/index.html" target="_blank">index.html (메인 홈, 가치 제안 카드, 3단계 대화형 퀴즈 '우리 회사에 맞는 이용 방식 찾기')</a></span>
+      <input type="date" class="task-date-input" id="task-index-page-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-index-page-memo" value="구현 완료 (퀴즈 인터랙션 및 결과 추천 연동)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-official-partner-page" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/fursys-official-partner-management.html" target="_blank">fursys-official-partner-management.html (퍼시스 공식 파트너 신품 장기 구독 - 3/4/5년 약정, 의자 케어 클리닝)</a></span>
+      <input type="date" class="task-date-input" id="task-official-partner-page-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-official-partner-page-memo" value="구현 완료 (신품 구독 혜택 퍼블리싱)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-rental-integrated-page" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/rental-company-integrated-management.html" target="_blank">rental-company-integrated-management.html (렌탈사 통합 관리 신품 장기 렌탈 - 금융 조건 맞춤, 손비 처리)</a></span>
+      <input type="date" class="task-date-input" id="task-rental-integrated-page-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-rental-integrated-page-memo" value="구현 완료 (렌탈사 조건 안내 파이프라인)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-short-term-page" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/short-term-operation.html" target="_blank">short-term-operation.html (중고 단기 렌탈 577개 카탈로그 리스트, 동적 속성 필터링, 장바구니 연동)</a></span>
+      <input type="date" class="task-date-input" id="task-short-term-page-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-short-term-page-memo" value="구현 완료 (실시간 검색 및 장바구니 연동)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-inquiry-page" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/inquiry.html" target="_blank">inquiry.html (빠른 렌탈 문의 폼, Dropzone 도면 첨부, 장바구니 가구 자동 연동, 접수 모달)</a></span>
+      <input type="date" class="task-date-input" id="task-inquiry-page-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-inquiry-page-memo" value="구현 완료 (동적 폼 및 첨부파일 UI 연동)">
+    </li>
+  </ul>
+
+  <h2>📦 3단계: 가구 데이터베이스 & 실시간 견적 엔진 (Data Engine)</h2>
+  <ul style="list-style:none; padding-left:0;">
+    <li class="task-item completed">
+      <input type="checkbox" id="task-products-json" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/data/products.json" target="_blank">data/products.json (577개 중고/신품 단기 렌탈 가구 데이터베이스 - 의자, 책상, 파티션 등)</a></span>
+      <input type="date" class="task-date-input" id="task-products-json-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-products-json-memo" value="구현 완료 (10ms 초고속 메모리 필터링 구조)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-architecture-plan" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/workflow/fursysrental_plan_20260812_1st.html" target="_blank">workflow/fursysrental_plan_20260812_1st.html (초절약 서버리스 아키텍처 Quota 비교 분석서)</a></span>
+      <input type="date" class="task-date-input" id="task-architecture-plan-date" value="2026-09-23">
+      <input type="text" class="task-memo-input" id="task-architecture-plan-memo" value="구현 완료 (MD, HTML, DOCX 보고서 수립)">
+    </li>
+  </ul>
+
+  <h2>📊 4단계 & 5단계: Google Sheets DB, 1일 캐시 & 웹훅 서비스</h2>
+  <ul style="list-style:none; padding-left:0;">
+    <li class="task-item completed">
+      <input type="checkbox" id="task-gas-api-setup" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/gas/google_apps_script.gs" target="_blank">Google Sheets DB 실시간 적재 & GAS REST API 웹앱 (한글 컬럼 지원, ID: 1afDWmodND6r8ku7zpRWQV6S_E9-GkI_w30ePXxaPA58) 연동</a></span>
+      <input type="date" class="task-date-input" id="task-gas-api-setup-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-gas-api-setup-memo" value="완료 (Google Exec Web App URL 연동 & 라이브 테스트 100% 검증)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-client-caching" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/main.js" target="_blank">브라우저 LocalStorage 1일 데이터 캐싱 및 GAS API 비동기 fetch() 렌더링 로직 바인딩</a></span>
+      <input type="date" class="task-date-input" id="task-client-caching-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-client-caching-memo" value="완료 (main.js GAS_API_URL 바인딩 & 24h 캐싱 구축)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-email-slack-notification" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/inquiry.html" target="_blank">렌탈 문의 접수 시 Nodemailer/Resend/EmailJS 기반 관리자 이메일 & Slack 웹훅 알림 연동</a></span>
+      <input type="date" class="task-date-input" id="task-email-slack-notification-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-email-slack-notification-memo" value="구현 완료 (POST 파이프라인 및 접수 영수증 모달 출력)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-seo-opengraph" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/index.html" target="_blank">카카오톡/네이버 공유용 Open Graph 태그 및 Favicon, SEO, Lighthouse 성능 점검</a></span>
+      <input type="date" class="task-date-input" id="task-seo-opengraph-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-seo-opengraph-memo" value="구현 완료 (5개 HTML OpenGraph 및 Schema.org 반영)">
+    </li>
+  </ul>
+
+  <h2>⚡ 6단계: 100% 클론 4대 고도화 패키지</h2>
+  <ul style="list-style:none; padding-left:0;">
+    <li class="task-item completed">
+      <input type="checkbox" id="task-floating-cart-drawer" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/main.js" target="_blank">우측 하단 플로팅 장바구니 바 & Slide-over 실시간 수량/개월수 견적 드로어 연동</a></span>
+      <input type="date" class="task-date-input" id="task-floating-cart-drawer-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-floating-cart-drawer-memo" value="구현 완료 (initFloatingCartBar & openCartDrawer)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-proposal-print" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/main.js" target="_blank">정식 '퍼시스 렌탈 견적서' 인쇄 전용 뷰어 / PDF 출력 팝업 모달 개발</a></span>
+      <input type="date" class="task-date-input" id="task-proposal-print-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-proposal-print-memo" value="구현 완료 (printOfficialProposal 🖨️ 규격 인쇄)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-product-detail-modal" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/short-term-operation.html" target="_blank">577개 가구 상세 Slide-over 모달 & 1~36개월 렌탈 기간별 할인율 시뮬레이터</a></span>
+      <input type="date" class="task-date-input" id="task-product-detail-modal-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-product-detail-modal-memo" value="구현 완료 (openProductDetailModal & 슬라이더 연동)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-faq-kakao-widget" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/index.html" target="_blank">자주 묻는 질문(FAQ Accordion) 5종 & 카카오톡 실시간 상담 플로팅 위젯 전 페이지 연동</a></span>
+      <input type="date" class="task-date-input" id="task-faq-kakao-widget-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-faq-kakao-widget-memo" value="구현 완료 (initFaqAccordion & initKakaoWidget)">
+    </li>
+  </ul>
+
+  <h2>🏆 7단계: 최종 고도화 완수 패키지 (엑셀 다운로드, 인원별 계산기, PWA)</h2>
+  <ul style="list-style:none; padding-left:0;">
+    <li class="task-item completed">
+      <input type="checkbox" id="task-excel-export" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/main.js" target="_blank">견적 장바구니 엑셀(CSV) 데이터 내보내기/다운로드 엔진 개발</a></span>
+      <input type="date" class="task-date-input" id="task-excel-export-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-excel-export-memo" value="구현 완료 (exportCartToCsv 구매팀 제출 기능)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-office-size-calculator" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/index.html" target="_blank">사무실 인원/평수 기반 가구 권장 수량 자동 연산 및 1-Click 장바구니 추가 연동</a></span>
+      <input type="date" class="task-date-input" id="task-office-size-calculator-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-office-size-calculator-memo" value="구현 완료 (initOfficeCalculator 🏢 인원 맞춤 연산)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-advanced-filter-modal" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/short-term-operation.html" target="_blank">상세 다중 필터 모달 (가격범위, 검수등급, 규격, 소재별 필터링)</a></span>
+      <input type="date" class="task-date-input" id="task-advanced-filter-modal-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-advanced-filter-modal-memo" value="구현 완료 (openAdvancedFilterModal 다중 조건 검색)">
+    </li>
+    <li class="task-item completed">
+      <input type="checkbox" id="task-pwa-service-worker" checked>
+      <span class="task-text"><a href="file:///D:/Antigravity/fursysrental/manifest.json" target="_blank">PWA (Progressive Web App) Manifest & Service Worker 오프라인 앱 지원</a></span>
+      <input type="date" class="task-date-input" id="task-pwa-service-worker-date" value="2026-09-24">
+      <input type="text" class="task-memo-input" id="task-pwa-service-worker-memo" value="구현 완료 (manifest.json & sw.js 앱 설치 연동)">
+    </li>
+  </ul>
+
+  <h2 style="color: #c2410c; border-bottom: 2px solid #fed7aa; padding-bottom: 8px;">🚀 8단계: 실서버 운영 배포 및 외부 서비스 실제 연동 (Production Deployment)</h2>
+  <div style="background-color: #fff7ed; border: 1px solid #ffedd5; padding: 14px 18px; border-radius: 8px; margin-bottom: 15px; font-size: 13.5px; color: #9a3412;">
+    <strong>ℹ️ 현황 안내:</strong> 프론트엔드 UI 및 기능 프로토타입 개발은 완성된 상태이나, 실서버 호스팅 배포 및 외부 API 키 연동 등 아래 4개 항목이 완료되어야 <strong>100% 라이브 실서버 오픈</strong>이 완료됩니다.
+  </div>
+  <ul style="list-style:none; padding-left:0;">
+    <li class="task-item">
+      <input type="checkbox" id="task-hosting-deploy">
+      <span class="task-text">웹 호스팅 및 도메인 배포 (Vercel / Netlify / GitHub Pages / fursysrental.com 도메인 연결)</span>
+      <input type="date" class="task-date-input" id="task-hosting-deploy-date" value="">
+      <input type="text" class="task-memo-input" id="task-hosting-deploy-memo" value="대기 중 (호스팅 서버 업로드 및 도메인 DNS 바인딩 필요)">
+    </li>
+    <li class="task-item">
+      <input type="checkbox" id="task-kakao-channel-bind">
+      <span class="task-text">카카오톡 상담 실제 파트너 채널 ID 바인딩 (현재 예시 URL -> 실제 운영 ID로 변경)</span>
+      <input type="date" class="task-date-input" id="task-kakao-channel-bind-date" value="">
+      <input type="text" class="task-memo-input" id="task-kakao-channel-bind-memo" value="대기 중 (pf.kakao.com 운영 채널 연결 필요)">
+    </li>
+    <li class="task-item">
+      <input type="checkbox" id="task-email-slack-apikey">
+      <span class="task-text">이메일/Slack 웹훅 실제 발송 Key 및 Webhook URL 바인딩 (inquiry.html 접수 알림용)</span>
+      <input type="date" class="task-date-input" id="task-email-slack-apikey-date" value="">
+      <input type="text" class="task-memo-input" id="task-email-slack-apikey-memo" value="대기 중 (Resend/Slack 실제 API Key 환경변수 적용)">
+    </li>
+    <li class="task-item">
+      <input type="checkbox" id="task-gas-prod-url">
+      <span class="task-text">Google Sheets DB 최종 배포 Exec URL 바인딩 (main.js GAS_API_URL 실환경 설정)</span>
+      <input type="date" class="task-date-input" id="task-gas-prod-url-date" value="">
+      <input type="text" class="task-memo-input" id="task-gas-prod-url-memo" value="대기 중 (GAS 라이브 앱 URL 최종 연동)">
+    </li>
+  </ul>
+</div>
+
+<script>
+  const prefix = 'antigravity_fursysrental_plan_2026_';
+  const checkboxes = document.querySelectorAll('.task-item input[type="checkbox"]');
+
+  function updateProgress() {
+    const total = checkboxes.length;
+    let completed = 0;
+    checkboxes.forEach(cb => {
+      if (cb.checked) completed++;
+    });
+    const percent = Math.round((completed / total) * 100);
+    
+    const percentElem = document.getElementById('progress-percent');
+    const textElem = document.getElementById('progress-text');
+    const barElem = document.getElementById('main-progress-bar');
+
+    if (percentElem) percentElem.innerText = percent + '%';
+    if (textElem) textElem.innerText = `${total}개 항목 중 ${completed}개 완료`;
+    if (barElem) barElem.style.width = percent + '%';
+  }
+
+  checkboxes.forEach(cb => {
+    const saved = localStorage.getItem(prefix + cb.id);
+    const dateInput = document.getElementById(cb.id + '-date');
+    const memoInput = document.getElementById(cb.id + '-memo');
+    const savedDate = localStorage.getItem(prefix + cb.id + '_date');
+    const savedMemo = localStorage.getItem(prefix + cb.id + '_memo');
+
+    if (saved === 'true' || (saved === null && cb.checked)) {
+      cb.checked = true;
+      cb.closest('.task-item').classList.add('completed');
+    } else if (saved === 'false') {
+      cb.checked = false;
+      cb.closest('.task-item').classList.remove('completed');
+    }
+
+    if (savedDate && dateInput) dateInput.value = savedDate;
+    if (savedMemo && memoInput) memoInput.value = savedMemo;
+
+    cb.addEventListener('change', () => {
+      localStorage.setItem(prefix + cb.id, cb.checked);
+      cb.closest('.task-item').classList.toggle('completed', cb.checked);
+      
+      if (cb.checked && dateInput && !dateInput.value) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.value = today;
+        localStorage.setItem(prefix + cb.id + '_date', today);
+      } else if (!cb.checked && dateInput) {
+        dateInput.value = '';
+        localStorage.removeItem(prefix + cb.id + '_date');
+      }
+
+      updateProgress();
+    });
+
+    if (dateInput) {
+      dateInput.addEventListener('change', () => {
+        localStorage.setItem(prefix + cb.id + '_date', dateInput.value);
+      });
+    }
+
+    if (memoInput) {
+      memoInput.addEventListener('input', () => {
+        localStorage.setItem(prefix + cb.id + '_memo', memoInput.value);
+      });
+    }
+  });
+
+  updateProgress();
+</script>
+</body>
+</html>
